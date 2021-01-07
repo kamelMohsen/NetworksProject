@@ -1,0 +1,30 @@
+Time 12.285872: Node 0 : Delayed Sending of Frame 0 with delay of  3.057115
+Time 12.285872: Node 4 : Sending of Frame 0 Sent Without Delay 
+Time 13.285872: Node 4 : Sending of Frame 1 Sent Without Delay 
+Time 9.909157: Node 4 : Sending of Frame 0 Sent Without Delay 
+Time 9.909157: Node 0 : Sending of Frame 0 Sent Without Delay 
+Time 10.909157: Node 4 : Sending of Frame 1 Sent Without Delay 
+Time 10.909157: Node 0 : Sending of Frame 1 Sent Without Delay 
+Time 9.909157: Node 4 : Sending of Frame 0 Sent Without Delay 
+Time 9.909157: Node 0 : Sending of Frame 0 Sent Without Delay 
+Time 10.909157: Node 4 : Sending of Frame 1 Sent Without Delay 
+Time 10.909157: Node 0 : Sending of Frame 1 Sent Without Delay 
+Time 7.000000: Node 0 : Sending of Frame 0 Sent Without Delay 
+Time 7.000000: Node 3 : Sending of Frame 0 Sent Without Delay 
+Time 8.000000: Node 0 : Sending of Frame 1 Sent Without Delay 
+Time 8.000000: Node 3 : Sending of Frame 1 Sent Without Delay 
+Time 32.806763: Node 4 : Sending of Frame 0 Sent Without Delay 
+Time 32.806763: Node 0 Sending of 0 was Dropped
+Time 33.806763: Node 4 : Delayed Sending of Frame 1 with delay of  3.117935
+Time 22.500939: Node 3 : Delayed Sending of Frame 0 with delay of  3.156317
+Time 22.500939: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 22.500939: Node 1 :Duplicate Sending of Frame 0
+Time 23.500939: Node 1 : Delayed Sending of Frame 1 with delay of  2.774061
+Time 22.500939: Node 3 : Delayed Sending of Frame 0 with delay of  3.156317
+Time 22.500939: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 22.500939: Node 1 :Duplicate Sending of Frame 0
+Time 23.500939: Node 1 : Delayed Sending of Frame 1 with delay of  2.774061
+Time 22.500939: Node 3 : Delayed Sending of Frame 0 with delay of  3.156317
+Time 22.500939: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 22.500939: Node 1 :Duplicate Sending of Frame 0
+Time 23.500939: Node 1 : Delayed Sending of Frame 1 with delay of  2.774061
