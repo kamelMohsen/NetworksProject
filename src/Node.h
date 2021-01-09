@@ -27,7 +27,7 @@ using namespace omnetpp;
 using namespace std;
 #define Ws 4 //Window Size
 #define timestep 1.0
-#define timeOut timestep+2.0
+#define timeOut timestep + 5.0
 #define mbits 2 //bits
 
 
@@ -50,6 +50,11 @@ class Node : public cSimpleModule
     int delayProp ;
     int dupProp;
     int dropProb;
+    int usefulBitsRecv;
+    int totalGenerated ;
+    int totalRetransmitted ;
+    int totalDropped;
+    int totalBitsSent;
     vector<string> messageBuffer;
     Frame_Base * newMsg;
     Frame_Base * timeOutMsg ;
@@ -59,6 +64,7 @@ class Node : public cSimpleModule
     virtual void handleMessage(cMessage *msg);
     void writeToFile(string message);
     int readFromFile();
+    void calculateStats();
     string corruptBit(string message, int percentage);
     void sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbability,int dupProbability);
     int getRedundantCount(int m);

@@ -1,0 +1,35 @@
+Time 71.123013: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 71.123013: Node 3 : Sending of Frame 0 Sent Without Delay 
+Time 71.672691: Node 1 : Sending of Frame 1 Sent Without Delay 
+Time 72.212750: Node 1 : Sending of Frame 2 Sent Without Delay 
+Time 72.212750 : Node 3 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
+Time 72.217846: Node 3 : Sending of Frame 1 Sent Without Delay 
+Time 72.217846 : Node 1 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
+Time 72.714082: Node 1 : Sending of Frame 3 Sent Without Delay 
+Time 72.714082 : Node 3 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 0
+Time 73.288317: Node 3 Sending of 2 was Dropped
+Time 73.288317 : Node 1 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 1
+Time 73.288317: Node 1 Sending of 4 was Dropped
+Time 73.312246 : Node 3 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 0
+Time 73.778452 : Node 3 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 1
+Time 73.778452: Node 3 : Sending of Frame 3 Sent Without Delay 
+Time 74.811736 : Node 1 : Recieved Wrong Frame 3 the Expected Frame was 2 Recieved Ack was 4
+Time 74.984133: Node 3 : Timeout to Frame 3
+Time 74.984133: Node 3 Sending of 1 was Dropped
+Time 76.595300: Node 1 : Timeout to Frame 3
+Time 76.595300: Node 1 : Delayed Sending of Frame 4 with delay of  3.064091
+Time 80.659392 : Node 3 : Recieved Expected Frame 4 and the next Expected Frame is 5 Recieved Ack was 2
+Time 80.659392: Node 3 : Sending of Frame 2 Sent Without Delay 
+Time 81.715512: Node 3 : Sending of Frame 3 Sent Without Delay 
+Time 81.715512 : Node 1 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 5
+Time 81.715512 : Node 1 : Sent all frames & Ended session with useful msgs received = 19 and total msg sent 37
+Time 81.715512 : Node 3 : Sent End Hub with useful msgs received = 28 and 47 Messages sent
+Time 82.595300: Node 1 : Timeout to Frame 4
+Time 82.595300: Node 1 Sending of 0 was Dropped
+Time 88.595300: Node 1 : Timeout to Frame 0
+Time 88.595300: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 94.595300: Node 1 : Timeout to Frame 0
+Time 94.595300: Node 1 : Sending of Frame 0 Sent Without Delay 
+Time 94.595300: Node 1 :Duplicate Sending of Frame 0
+Time 100.595300: Node 1 : Timeout to Frame 0
+Time 100.595300: Node 1 : Sending of Frame 0 Sent Without Delay 

@@ -27,14 +27,17 @@ void Hub::initialize()
         ofstream myfile;
         myfile.open ("SessionLOG"+to_string(i)+".txt",std::ofstream::trunc);
         myfile.close();
+        myfile.open ("Stats"+to_string(i)+".txt",std::ofstream::trunc);
+        myfile.close();
     }
 }
 
 void Hub::handleMessage(cMessage *msg)
 {
     Frame_Base *mmsg = check_and_cast<Frame_Base *>(msg);
-    if(sessionCount>maxSessions)
+    if(simTime() >= 180.0 )
     {
+        calculateFinalStats();
         bubble("No More Sessions");
         exit(0);
         return;
@@ -70,5 +73,73 @@ void Hub::handleMessage(cMessage *msg)
             int redirectTo=(mmsg->getSenderModuleId()-3==node1Index)?node2Index:node1Index;
             send(mmsg,"outs",redirectTo);
         }
+    }
+}
+
+
+void Hub::calculateFinalStats(){
+    int usefulBitsRecv = 0;
+    int totalBitsSent = 0;
+    int totalGenerated = 0;
+    int totalRetransmitted = 0;
+    int totalDropped = 0;
+    for(int i=0;i<maxSessions;i++)
+    {
+        string line;
+        // Read from the text file
+        ifstream MyReadFile("Stats"+to_string(i)+".txt");
+
+        // Use a while loop together with the getline() function to read the file line by line
+        while (getline (MyReadFile, line)) {
+
+            string delimiter = " ";
+            size_t pos = 0;
+            string token;
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            usefulBitsRecv += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalBitsSent += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalGenerated += stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalRetransmitted += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalDropped += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+        }
+
+        // Close the file
+        MyReadFile.close();
+
+        ofstream myfile;
+
+        myfile.open ("FinalStats.txt",std::ofstream::trunc);
+        myfile << "Total Generated = " << totalGenerated<<"\n";
+        myfile << "Total Retransmitted = " << totalRetransmitted<<"\n";
+        myfile << "Total Dropped = " << totalDropped<<"\n";
+        myfile << "Utilization percent = " << ((double)((double)usefulBitsRecv/(double)(totalBitsSent+usefulBitsRecv))*100)<<"\n";
+        myfile.close();
+
+
+
     }
 }

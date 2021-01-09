@@ -19,6 +19,11 @@ Define_Module(Node);
 
 void Node::initialize()
 {
+    usefulBitsRecv = 0;
+    totalBitsSent = 0;
+    totalGenerated = 0;
+    totalRetransmitted = 0;
+    totalDropped = 0;
     delayProp = par("delayRate").doubleValue();
     dupProp = par("duplicateRate").doubleValue();
     dropProb = par("dropRate").doubleValue();
@@ -48,6 +53,7 @@ void Node::handleMessage(cMessage *msg)
             //Timeout Code
             EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Timeout to Frame "<<mmsg->getFrameNum()<<endl;
             writeToFile("Time "+to_string(simTime().dbl())+": Node "+to_string(nodeIndex)+" : Timeout to Frame "+to_string(mmsg->getFrameNum()));
+            totalRetransmitted += Sn - Sf;
             Sn = Sf; //return Sn to beginning of window
             wakeUpTransmission();
         }
@@ -70,12 +76,16 @@ void Node::handleMessage(cMessage *msg)
         string message;
         if(type==2) //start transmission
         {
+            totalGenerated = 0;
+            totalRetransmitted = 0;
+            totalDropped = 0;
+            usefulBitsRecv = 0;
+            totalBitsSent = 0;
             activeSession = mmsg->getSessionNumber();
             Sn = 0;
             Sf = 0;
             Sl = windowSize-1;
             R = 0;
-
             ended=false;
             message=messageBuffer[Sn]+char(R);
             newMsg->setType(0); //data
@@ -93,7 +103,7 @@ void Node::handleMessage(cMessage *msg)
             newMsg->setPayLoad(payLoad.c_str());
             Sn += 1;
             sendFrame(newMsg,delayProp,dropProb,dupProp);
-
+            totalGenerated +=1;
             timeOutMsg = new Frame_Base("");
             timeOutMsg->setType(10);
             //Adds new timeOut timer
@@ -107,8 +117,10 @@ void Node::handleMessage(cMessage *msg)
 
             if(type==5)
             {
+                writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Sent End Hub with useful msgs received = " + to_string(usefulBitsRecv)  +" and "+ to_string(totalBitsSent) + " Messages sent");
                 mmsg->setSessionNumber(activeSession);
                 //END session type
+                calculateStats();
                 mmsg->setName("End Session Hub");
                 mmsg->setType(3);
                 send(mmsg->dup(),"outs",0); //to actually send the frame
@@ -127,6 +139,7 @@ void Node::handleMessage(cMessage *msg)
             int ack=(int)recievedMessage[recievedMessage.size()-1]; //i will slide window with this
             if(frameNum==R)
             {
+                usefulBitsRecv += recievedMessage.size();
                 R++;
                 EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Recieved Expected Frame "<<mmsg->getFrameNum()<<" and the next Expected Frame is "<<R<<" Recieved Ack was "<<ack<<endl;
                 writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Recieved Expected Frame "+to_string(mmsg->getFrameNum())+" and the next Expected Frame is "+to_string(R)+" Recieved Ack was "+to_string(ack));
@@ -150,9 +163,10 @@ void Node::handleMessage(cMessage *msg)
                     mmsg->setType(5);
                     mmsg->setSessionNumber(activeSession);
                     send(mmsg->dup(),"outs",0);
+                    calculateStats();
                     mmsg->setName("End Session Hub");
                     EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Sent all frames & Ended session "<<endl;
-                    writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Sent all frames & Ended session ");
+                    writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Sent all frames & Ended session with useful msgs received = " + to_string(usefulBitsRecv) + " and total msg sent " + to_string(totalBitsSent));
                     Sn = 0;
                     Sf = 0;
                     ended=true;
@@ -172,9 +186,15 @@ void Node::handleMessage(cMessage *msg)
 }
 void Node::sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbability,int dupProbability)
 {
+    string recievedPayLoad=frame->getPayLoad();
+    int charCount=receiveCharCount(recievedPayLoad);
+    string recievedMessage= hammingCodeReciever(recievedPayLoad,charCount);
+    totalBitsSent += recievedMessage.size();
+    totalGenerated += 1;
     int randDrop=uniform(0,1)*10;
     if(randDrop<(int)(dataDropProbability/10)) //message will not be sent
     {
+        totalDropped += 1;
         EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<"Sending of "<<frame->getFrameNum()<<" was Dropped"<<endl;
         writeToFile("Time "+to_string(simTime().dbl())+": Node "+to_string(nodeIndex)+" Sending of "+to_string(frame->getFrameNum())+" was Dropped");
         return;
@@ -182,7 +202,7 @@ void Node::sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbabil
 
     int rand=uniform(0,1)*10;
     double timeStepAfter=timestep;
-
+    double randFactor = uniform(0.01,0.1);
     if(rand<(int)(delayProbability/10))
     {
 
@@ -194,7 +214,7 @@ void Node::sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbabil
     }
     else
     {
-        scheduleAt(simTime()+timeStepAfter,frame); //1s timeout
+        scheduleAt(simTime()+timeStepAfter+randFactor,frame); //1s timeout
         EV<<"Time "<<simTime()<<": Node "<<nodeIndex<<" : Sending of Frame "<<frame->getFrameNum()<<" Sent Without Delay "<<endl;
         writeToFile("Time "+to_string(simTime().dbl())+": Node "+to_string(nodeIndex)+" : Sending of Frame "+to_string(frame->getFrameNum())+" Sent Without Delay ");
     }
@@ -203,6 +223,8 @@ void Node::sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbabil
 
     if(randDup<(int)(dupProbability/10))
     {
+        totalGenerated += 1;
+        totalBitsSent += recievedMessage.size();
         double timeAfter=timeStepAfter+uniform(0.01,0.1);
         dupPointer=frame->dup();
         scheduleAt(simTime()+timeAfter,dupPointer); //1s timeout
@@ -428,4 +450,10 @@ int Node::readFromFile(){
     }
     myfile.close();
     return number_of_lines;
+}
+void Node::calculateStats(){
+    ofstream myfile;
+    myfile.open ("Stats"+to_string(activeSession)+".txt",std::ios_base::app);
+    myfile <<    to_string(usefulBitsRecv) + " "+to_string(totalBitsSent)+ " "+to_string(totalGenerated) + " "+to_string(totalRetransmitted)+" "+ to_string(totalDropped) + "\n";
+    myfile.close();
 }

@@ -21,7 +21,7 @@
 #include <fstream>
 using namespace omnetpp;
 using namespace std;
-#define maxSessions 1
+#define maxSessions 7
 
 
 /**
@@ -33,6 +33,7 @@ class Hub : public cSimpleModule
     int endCounter ;
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    void calculateFinalStats();
     int sessionCount;
 
     int node1Index;

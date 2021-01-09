@@ -1,0 +1,39 @@
+Time 9.170212: Node 3 : Sending of Frame 0 Sent Without Delay 
+Time 9.170212: Node 2 : Sending of Frame 0 Sent Without Delay 
+Time 9.201253: Node 2 : Timeout to Frame 6
+Time 9.201253: Node 2 : Sending of Frame 0 Sent Without Delay 
+Time 10.208830: Node 2 : Sending of Frame 1 Sent Without Delay 
+Time 10.208830 : Node 3 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
+Time 10.262120: Node 2 Sending of 2 was Dropped
+Time 10.262120 : Node 3 : Recieved Wrong Frame 0 the Expected Frame was 1 Recieved Ack was 0
+Time 10.268375: Node 3 : Sending of Frame 1 Sent Without Delay 
+Time 10.268375 : Node 2 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
+Time 11.265923: Node 2 : Sending of Frame 3 Sent Without Delay 
+Time 11.265923 : Node 3 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 0
+Time 11.279217: Node 3 : Sending of Frame 2 Sent Without Delay 
+Time 11.279217: Node 3 :Duplicate Sending of Frame 2
+Time 11.279217 : Node 2 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 1
+Time 11.279217: Node 2 : Delayed Sending of Frame 4 with delay of  3.194541
+Time 12.304062 : Node 2 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 2
+Time 12.304062: Node 2 : Sending of Frame 5 Sent Without Delay 
+Time 12.338971 : Node 2 : Recieved Wrong Frame 2 the Expected Frame was 3 Recieved Ack was 2
+Time 12.340392: Node 2 : Sending of Frame 6 Sent Without Delay 
+Time 12.340392 : Node 3 : Recieved Wrong Frame 3 the Expected Frame was 2 Recieved Ack was 1
+Time 12.340392: Node 3 : Sending of Frame 3 Sent Without Delay 
+Time 13.353057 : Node 3 : Recieved Wrong Frame 5 the Expected Frame was 2 Recieved Ack was 3
+Time 13.390820 : Node 2 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 2
+Time 13.401895 : Node 3 : Recieved Wrong Frame 6 the Expected Frame was 2 Recieved Ack was 3
+Time 15.170212: Node 3 : Timeout to Frame 3
+Time 15.170212: Node 3 : Sending of Frame 3 Sent Without Delay 
+Time 15.473758 : Node 3 : Recieved Wrong Frame 4 the Expected Frame was 2 Recieved Ack was 2
+Time 16.241001 : Node 2 : Recieved Wrong Frame 3 the Expected Frame was 4 Recieved Ack was 2
+Time 18.340392: Node 2 : Timeout to Frame 6
+Time 18.340392: Node 2 : Sending of Frame 2 Sent Without Delay 
+Time 19.412720: Node 2 : Sending of Frame 3 Sent Without Delay 
+Time 19.412720 : Node 3 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 4
+Time 19.412720 : Node 3 : Sent all frames & Ended session with useful msgs received = 13 and total msg sent 36
+Time 19.412720 : Node 2 : Sent End Hub with useful msgs received = 25 and 56 Messages sent
+Time 25.412720: Node 2 : Timeout to Frame 3
+Time 25.412720: Node 2 : Delayed Sending of Frame 2 with delay of  1.999991
+Time 31.412720: Node 2 : Timeout to Frame 2
+Time 31.412720: Node 2 : Sending of Frame 2 Sent Without Delay 

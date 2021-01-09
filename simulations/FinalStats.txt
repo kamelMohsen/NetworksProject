@@ -1,0 +1,4 @@
+Total Generated = 130
+Total Retransmitted = 36
+Total Dropped = 10
+Utilization percent = 33.6957
