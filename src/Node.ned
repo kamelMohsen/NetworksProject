@@ -24,7 +24,8 @@ simple Node
         double lambda = default(2.0);
         double delayRate = default(40);
 		double dropRate = default(30);
-		double duplicateRate = default(10)  ;      
+		double duplicateRate = default(10);
+		double corruptBitRate = default(100)  ;         
     gates:
         input ins[];
         output outs[];

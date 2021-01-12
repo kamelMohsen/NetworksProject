@@ -55,6 +55,7 @@ class Node : public cSimpleModule
     int totalRetransmitted ;
     int totalDropped;
     int totalBitsSent;
+    int corruptBitProb;
     vector<string> messageBuffer;
     Frame_Base * newMsg;
     Frame_Base * timeOutMsg ;

@@ -27,7 +27,7 @@ void Node::initialize()
     delayProp = par("delayRate").doubleValue();
     dupProp = par("duplicateRate").doubleValue();
     dropProb = par("dropRate").doubleValue();
-
+    corruptBitProb = par("corruptBitRate").doubleValue();
    //Window Size = 3
     nodeIndex=this->getId()-3;
 
@@ -38,7 +38,7 @@ void Node::initialize()
     maxR = readFromFile();
     windowSize = maxR-1;
 
-
+    ended = false;
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -48,8 +48,12 @@ void Node::handleMessage(cMessage *msg)
     int type=mmsg->getType();
     if(mmsg->isSelfMessage())
     {
+        if(ended){
+            return;
+        }
         if(type==10)
         {
+
             //Timeout Code
             EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Timeout to Frame "<<mmsg->getFrameNum()<<endl;
             writeToFile("Time "+to_string(simTime().dbl())+": Node "+to_string(nodeIndex)+" : Timeout to Frame "+to_string(mmsg->getFrameNum()));
@@ -96,7 +100,7 @@ void Node::handleMessage(cMessage *msg)
             bitset<8> charCountBits(charCount);
             string payLoad="";
             payLoad+=charCountBits.to_string(); //first byte is the char count
-            string finalMessage=corruptBit(message,80);
+            string finalMessage=corruptBit(message,corruptBitProb);
             newMsg->setName(finalMessage.c_str());
             string hammingMessage=hammingCodeSender(message,finalMessage,charCount);
             payLoad+=hammingMessage;
@@ -121,6 +125,7 @@ void Node::handleMessage(cMessage *msg)
                 mmsg->setSessionNumber(activeSession);
                 //END session type
                 calculateStats();
+                cancelEvent(timeOutMsg);
                 mmsg->setName("End Session Hub");
                 mmsg->setType(3);
                 send(mmsg->dup(),"outs",0); //to actually send the frame
@@ -142,14 +147,14 @@ void Node::handleMessage(cMessage *msg)
                 usefulBitsRecv += recievedMessage.size();
                 R++;
                 EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Recieved Expected Frame "<<mmsg->getFrameNum()<<" and the next Expected Frame is "<<R<<" Recieved Ack was "<<ack<<endl;
-                writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Recieved Expected Frame "+to_string(mmsg->getFrameNum())+" and the next Expected Frame is "+to_string(R)+" Recieved Ack was "+to_string(ack));
+                writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Recieved Expected Frame "+to_string(mmsg->getFrameNum())+" and the next Expected Frame is "+to_string(R)+" Recieved Ack was "+to_string(ack) +"Message : " +message + " Char Count : " + to_string(charCount) );
                 bubble(((string)"Recieved "+message +(string)" Next Expected Frame is "+to_string(R)+" Recieved Ack was "+to_string(ack)).c_str());
             }
             else
             {
                 bubble(("Not the Expected Frame "+(string)"The Expected Frame was "+to_string(R)+" Recieved Ack was "+to_string(ack)).c_str());
                 EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Recieved Wrong Frame "<<mmsg->getFrameNum()<<" the Expected Frame was "<<R<<" Recieved Ack was "<<ack<<endl;
-                writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Recieved Wrong Frame "+to_string(mmsg->getFrameNum())+" the Expected Frame was "+to_string(R)+" Recieved Ack was "+to_string(ack));
+                writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Recieved Wrong Frame "+to_string(mmsg->getFrameNum())+" the Expected Frame was "+to_string(R)+" Recieved Ack was "+to_string(ack)+"Message : " +message + " Char Count : " + to_string(charCount));
             }
 
             //max Sn Sl at any time , max ack Sl+1
@@ -164,6 +169,7 @@ void Node::handleMessage(cMessage *msg)
                     mmsg->setSessionNumber(activeSession);
                     send(mmsg->dup(),"outs",0);
                     calculateStats();
+                    cancelEvent(timeOutMsg);
                     mmsg->setName("End Session Hub");
                     EV<<"Time "<<simTime().dbl()<<": Node "<<nodeIndex<<" : Sent all frames & Ended session "<<endl;
                     writeToFile("Time "+to_string(simTime().dbl())+" : Node "+to_string(nodeIndex)+" : Sent all frames & Ended session with useful msgs received = " + to_string(usefulBitsRecv) + " and total msg sent " + to_string(totalBitsSent));
@@ -177,12 +183,13 @@ void Node::handleMessage(cMessage *msg)
                 {
                     wakeUpTransmission();
                 }
-                //cancelAndDelete(mmsg);
+
             }
             /*-----------Sender Code End----------------*/
         }
     }
     delete(mmsg);
+
 }
 void Node::sendFrame(Frame_Base *frame,int delayProbability,int dataDropProbability,int dupProbability)
 {
@@ -413,7 +420,7 @@ void Node::wakeUpTransmission()
     bitset<8> charCountBits(charCount);
     string payLoad="";
     payLoad+=charCountBits.to_string(); //first byte is the char count
-    string finalMessage=corruptBit(message,80);
+    string finalMessage=corruptBit(message,corruptBitProb);
     newMsg->setName(finalMessage.c_str());
     string hammingMessage=hammingCodeSender(message,finalMessage,charCount);
     payLoad+=hammingMessage;

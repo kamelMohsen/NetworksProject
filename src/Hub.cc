@@ -35,7 +35,7 @@ void Hub::initialize()
 void Hub::handleMessage(cMessage *msg)
 {
     Frame_Base *mmsg = check_and_cast<Frame_Base *>(msg);
-    if(simTime() >= 180.0 )
+    if(sessionCount>maxSessions)
     {
         calculateFinalStats();
         bubble("No More Sessions");
@@ -78,11 +78,14 @@ void Hub::handleMessage(cMessage *msg)
 
 
 void Hub::calculateFinalStats(){
-    int usefulBitsRecv = 0;
-    int totalBitsSent = 0;
+    int usefulBitsRecv0 = 0;
+    int totalBitsSent0 = 0;
+    int usefulBitsRecv1 = 0;
+    int totalBitsSent1 = 0;
     int totalGenerated = 0;
     int totalRetransmitted = 0;
     int totalDropped = 0;
+    double utilization = 0;
     for(int i=0;i<maxSessions;i++)
     {
         string line;
@@ -90,7 +93,7 @@ void Hub::calculateFinalStats(){
         ifstream MyReadFile("Stats"+to_string(i)+".txt");
 
         // Use a while loop together with the getline() function to read the file line by line
-        while (getline (MyReadFile, line)) {
+            getline (MyReadFile, line);
 
             string delimiter = " ";
             size_t pos = 0;
@@ -98,13 +101,13 @@ void Hub::calculateFinalStats(){
 
             pos = line.find(delimiter);
             token = line.substr(0, pos);
-            usefulBitsRecv += std::stoi(token);
+            usefulBitsRecv0 += std::stoi(token);
             line.erase(0, pos + delimiter.length());
 
 
             pos = line.find(delimiter);
             token = line.substr(0, pos);
-            totalBitsSent += std::stoi(token);
+            totalBitsSent0 += std::stoi(token);
             line.erase(0, pos + delimiter.length());
 
 
@@ -125,7 +128,42 @@ void Hub::calculateFinalStats(){
             totalDropped += std::stoi(token);
             line.erase(0, pos + delimiter.length());
 
-        }
+            getline (MyReadFile, line);
+            delimiter = " ";
+            pos = 0;
+            token="";
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            usefulBitsRecv1 += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalBitsSent1 += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalGenerated += stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalRetransmitted += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+
+
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            totalDropped += std::stoi(token);
+            line.erase(0, pos + delimiter.length());
+            utilization += ((double)usefulBitsRecv1/(double)(totalBitsSent0+usefulBitsRecv1));
+            utilization += ((double)usefulBitsRecv0/(double)(totalBitsSent1+usefulBitsRecv0));
+            utilization /= 2 ;
 
         // Close the file
         MyReadFile.close();
@@ -136,7 +174,7 @@ void Hub::calculateFinalStats(){
         myfile << "Total Generated = " << totalGenerated<<"\n";
         myfile << "Total Retransmitted = " << totalRetransmitted<<"\n";
         myfile << "Total Dropped = " << totalDropped<<"\n";
-        myfile << "Utilization percent = " << ((double)((double)usefulBitsRecv/(double)(totalBitsSent+usefulBitsRecv))*100)<<"\n";
+        myfile << "Utilization percent = " << utilization*100<<"\n";
         myfile.close();
 
 

@@ -1,40 +1,43 @@
-Time 28.661414: Node 3 : Sending of Frame 0 Sent Without Delay 
-Time 28.661414: Node 1 : Sending of Frame 0 Sent Without Delay 
-Time 29.668698: Node 1 : Sending of Frame 1 Sent Without Delay 
-Time 29.675948: Node 3 : Sending of Frame 1 Sent Without Delay 
-Time 29.726671: Node 3 : Sending of Frame 2 Sent Without Delay 
-Time 29.726671: Node 3 :Duplicate Sending of Frame 2
-Time 29.726671 : Node 1 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
-Time 29.758218: Node 1 : Sending of Frame 2 Sent Without Delay 
-Time 29.758218 : Node 3 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0
-Time 30.695455: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 30.695455 : Node 3 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 0
-Time 30.726638 : Node 1 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 0
-Time 30.741894 : Node 1 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 0
-Time 30.759563 : Node 1 : Recieved Wrong Frame 2 the Expected Frame was 3 Recieved Ack was 0
-Time 30.830889 : Node 3 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 1
-Time 30.830889: Node 3 : Sending of Frame 3 Sent Without Delay 
-Time 31.760089 : Node 3 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 1
-Time 31.900566 : Node 1 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 3
-Time 31.900566: Node 1 : Sending of Frame 4 Sent Without Delay 
-Time 32.963515 : Node 3 : Recieved Expected Frame 4 and the next Expected Frame is 5 Recieved Ack was 4
-Time 32.963515 : Node 3 : Sent all frames & Ended session with useful msgs received = 28 and total msg sent 30
-Time 32.963515 : Node 1 : Sent End Hub with useful msgs received = 25 and 28 Messages sent
-Time 34.595300: Node 1 : Timeout to Frame 2
-Time 34.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 34.661414: Node 3 : Timeout to Frame 3
-Time 34.661414: Node 3 : Sending of Frame 0 Sent Without Delay 
-Time 40.595300: Node 1 : Timeout to Frame 3
-Time 40.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 46.595300: Node 1 : Timeout to Frame 3
-Time 46.595300: Node 1 Sending of 3 was Dropped
-Time 52.595300: Node 1 : Timeout to Frame 3
-Time 52.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 52.595300: Node 1 :Duplicate Sending of Frame 3
-Time 58.595300: Node 1 : Timeout to Frame 3
-Time 58.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 58.595300: Node 1 :Duplicate Sending of Frame 3
-Time 64.595300: Node 1 : Timeout to Frame 3
-Time 64.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
-Time 70.595300: Node 1 : Timeout to Frame 3
-Time 70.595300: Node 1 : Sending of Frame 3 Sent Without Delay 
+Time 209.431613: Node 3 : Sending of Frame 0 Sent Without Delay 
+Time 209.431613: Node 2 : Delayed Sending of Frame 0 with delay of  2.640037
+Time 210.496247: Node 3 Sending of 1 was Dropped
+Time 210.496247 : Node 2 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0Message : THIS Char Count : 5
+Time 213.071650: Node 2 Sending of 1 was Dropped
+Time 213.071650 : Node 3 : Recieved Expected Frame 0 and the next Expected Frame is 1 Recieved Ack was 0Message : YA Char Count : 3
+Time 216.496247: Node 3 : Timeout to Frame 1
+Time 216.496247: Node 3 : Sending of Frame 0 Sent Without Delay 
+Time 217.535049: Node 3 : Sending of Frame 1 Sent Without Delay 
+Time 217.535049 : Node 2 : Recieved Wrong Frame 0 the Expected Frame was 1 Recieved Ack was 1Message : THIS Char Count : 5
+Time 217.535049: Node 2 : Delayed Sending of Frame 2 with delay of  2.279650
+Time 218.574270: Node 3 : Sending of Frame 2 Sent Without Delay 
+Time 218.574270 : Node 2 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 1Message : PROJECT Char Count : 8
+Time 219.600978: Node 3 Sending of 3 was Dropped
+Time 219.600978 : Node 2 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 1Message : IS Char Count : 3
+Time 220.814699: Node 2 Sending of 3 was Dropped
+Time 220.814699 : Node 3 : Recieved Wrong Frame 2 the Expected Frame was 1 Recieved Ack was 1Message : 3AWZ Char Count : 5
+Time 220.814699: Node 3 : Sending of Frame 4 Sent Without Delay 
+Time 221.845349 : Node 2 : Recieved Wrong Frame 4 the Expected Frame was 3 Recieved Ack was 1Message : BAAAAAAD Char Count : 9
+Time 226.814699: Node 2 : Timeout to Frame 3
+Time 226.814699: Node 2 Sending of 1 was Dropped
+Time 226.814699: Node 3 : Timeout to Frame 4
+Time 226.814699: Node 3 Sending of 1 was Dropped
+Time 232.814699: Node 2 : Timeout to Frame 1
+Time 232.814699: Node 2 : Delayed Sending of Frame 1 with delay of  3.278960
+Time 232.814699: Node 3 : Timeout to Frame 1
+Time 232.814699: Node 3 Sending of 1 was Dropped
+Time 237.093659: Node 2 Sending of 2 was Dropped
+Time 237.093659 : Node 3 : Recieved Expected Frame 1 and the next Expected Frame is 2 Recieved Ack was 3Message : BASHMOHNDS Char Count : 11
+Time 237.093659: Node 3 Sending of 2 was Dropped
+Time 243.093659: Node 2 : Timeout to Frame 2
+Time 243.093659: Node 2 Sending of 1 was Dropped
+Time 243.093659: Node 3 : Timeout to Frame 2
+Time 243.093659: Node 3 : Sending of Frame 3 Sent Without Delay 
+Time 244.181406: Node 3 : Sending of Frame 4 Sent Without Delay 
+Time 244.181406 : Node 2 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 2Message : SO Char Count : 3
+Time 244.181406: Node 2 : Sending of Frame 2 Sent Without Delay 
+Time 245.216326 : Node 2 : Recieved Expected Frame 4 and the next Expected Frame is 5 Recieved Ack was 2Message : BAAAAAAD Char Count : 9
+Time 245.227051: Node 2 : Delayed Sending of Frame 3 with delay of  1.862119
+Time 245.227051 : Node 3 : Recieved Expected Frame 2 and the next Expected Frame is 3 Recieved Ack was 4Message : 3AWZ Char Count : 5
+Time 248.089171 : Node 3 : Recieved Expected Frame 3 and the next Expected Frame is 4 Recieved Ack was 5Message : AT5RG Char Count : 6
+Time 248.089171 : Node 3 : Sent all frames & Ended session with useful msgs received = 25 and total msg sent 72
+Time 248.089171 : Node 2 : Sent End Hub with useful msgs received = 28 and 74 Messages sent
